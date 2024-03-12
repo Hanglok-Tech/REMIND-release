@@ -1,0 +1,64 @@
+1. Introduction to Remind Interface:
+   The Remind middleware is divided into two modules: the data communication module and the data operation module, corresponding to RemindCommunicationStack and RemindData library respectively. Currently, we have only opened the RemindCommunicationStack library. Below is a brief introduction to this communication library.
+   
+   RemindCommunicationStack is the communication module, mainly providing a unified interface for intraoperative data transmission. The application layer only needs to do some simple configurations to use it directly, without considering communication methods, how to establish connections between nodes, storage of communication data, communication efficiency, etc., thus improving development efficiency.
+
+2. Introduction to RemindCommunicationStack Module Interface:
+   2.1 bool LoadConfig(const QString &device_path, const QString &topology_path);
+     Function: Load node parameters and topology configuration files.
+     Parameters:
+		device_path: Path to the node configuration file, default is placed in the "config" folder in the same directory as the executable file.
+		topology_path: Path to the node topology configuration file, default is placed in the "config" folder in the same directory as the executable file.
+     Returns: Returns true if loaded successfully, false if failed; if failed, you can check the reason for failure through the information received by the signal sigMessage.
+
+   2.2 void SetPatientSession(const QString &patient_id, const QString &session_id);
+     Function: Set the IDs of the patient and medical record. IDs are obtained when creating patient and medical record information.
+     Parameters:
+		patient_id: Patient ID, generated when calling the RemindData interface to create patient information.
+		session_id: Patient's medical record ID, generated when calling the RemindData interface to create a surgery for a patient.
+
+   2.3 bool Launch(const QString &bid = "");
+     Function: Start the communication module.
+     Parameters:
+		bid: Specify the current node ID. If not specified, it defaults to the ID configured in the configuration file.
+     Returns: Returns true if started successfully, false if failed; if failed, you can check the reason for failure through the information received by the signal sigMessage.
+
+   2.4 bool Terminate();
+     Function: Stop the communication module.
+
+   2.5 BlockingQueue<CustomizedMessage> *GetOutputQueue(const QString &bid = "");
+     Function: Get the pointer to the corresponding output queue by ID. For example, if the destination node ID to be sent to is 123, inputting 123 will get the queue of that node, and then data can be sent through this queue.
+     Parameters:
+		bid: ID of the destination node.
+     Returns: Returns a pointer to the queue if successful, null pointer if failed; if failed, you can check the reason for failure through the information received by the signal sigMessage.
+
+   2.6 BlockingQueue<CustomizedMessage> *GetInputQueue(const QString &bid = "");
+     Function: Get the pointer to the corresponding input queue by ID. For example, if the node ID to receive information is 123, inputting 123 will get the queue of that node, and then data can be received through this queue.
+     Parameters:
+		bid: ID of the receiving node.
+     Returns: Returns a pointer to the queue if successful, null pointer if failed; if failed, you can check the reason for failure through the information received by the signal sigMessage.
+
+   2.7 bool GetDeviceStatus(QMap<QString, QString> &id2status);
+     Function: Get the status of all nodes.
+     Parameters:
+		id2status: QMap variable storing all returned status information, where "a" indicates online and "i" indicates offline.
+     Returns: Returns true if successful, false if failed.
+
+   2.8 bool GetDeviceStatus(const QString &bid, QString &status);
+     Function: Get the status of a node by its ID.
+     Parameters:
+		status: Returned status information, where "a" indicates online and "i" indicates offline.
+     Returns: Returns true if successful, false if failed.
+
+   2.9 QString GetCurrentNodeName();
+     Function: Get the name of the current node.
+
+   2.10 QString GetCurrentNodeId();
+     Function: Get the ID of the current node.
+
+   2.11 QMap<QString, QString> GetNodeConnectList();
+     Function: Get all destination nodes connected to the current node.
+
+   2.12 shared_ptr<InfoDeviceNodes> GetNodeConfig();
+     Function: Get node configuration information.
+	 

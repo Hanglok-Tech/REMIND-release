@@ -1,0 +1,24 @@
+1. Configure parameters:
+   1.1 Open the "ConfigEdit.exe" tool in the directory "deploy_64\linux_64(windows_64)".
+   1.2 Configure the parameters according to the instructions in "document\topology_editor.txt" for two nodes.
+   1.3 Configure the two node IDs as 1001 and 1002, and you can automatically name them.
+   1.4 Configure the IP address to the IP of the IBCCM Docker service installed.
+
+2. Example tool demonstration:
+   We will demonstrate configuring two nodes (one running on a Windows system and one running on a Linux system); assuming the node running on the Windows system has an ID of 1001, and the one running on the Linux system has an ID of 1002
+   
+   Before running, we need to ensure that the relevant services have been installed according to the file 'IBCCM_installation.txt'.
+   
+   2.1 Running the Windows system node:
+      Step 1: Copy the "Remindmidleware-release\example\remind_test\windows_deploy_64" to the directory of the Windows system.
+      Step 2: Copy the previously configured config files (device_config.xml, topology_config.xml) to the "config" folder in this directory.
+      Step 3: Open the "remind_test.exe" program to launch the interface.
+      Step 4: In the opened program interface, select "1001" as the origin ID and "1002" as the target ID.
+      Step 5: Click "start" to run.
+   2.2 Running the Linux system node:
+      Step 1: Copy the "Remindmidleware-release\example\remind_test\linux_deploy_64" to the directory of the Linux system (Ubuntu 22.04).
+      Step 2: Copy the previously configured config files (device_config.xml, topology_config.xml) to the "config" folder in this directory.
+      Step 3: Open the "remind_test.sh" script program to launch the interface.
+      Step 4: In the opened program interface, select "1002" as the origin ID and "1001" as the target ID.
+      Step 5: Click "start" to run.
+   2.3 This way, we can observe that the two nodes running on Windows and Linux systems can communicate with each other.

@@ -1,0 +1,28 @@
+1. Node Parameter Configuration File:
+   This file configures parameters for each node. The filename is "device_config.xml", and we can use the "ConfigEdit.exe" tool to complete parameter configuration.
+   1.1 Parameter Introduction:
+      - rabbitmq: Communication between nodes needs to be done through the RabbitMQ service, so parameters such as connection IP and port need to be configured.
+      - service: If data communication between nodes needs to be saved, it is done through a dedicated storage service. Configuration of parameters to connect to the service for storing data is required.
+      - select: Select the current node ID.
+      - devices: Configure parameters such as the name, IP, and ID of each node.
+      - heartbeat: Configure parameters for connecting to the heartbeat service.
+
+   1.2 Parameter Configuration Tool "ConfigEdit.exe":
+   This is a dedicated tool for editing configuration files to quickly modify various parameters. Open the "device config" page of the tool interface, click the edit button in the lower-left corner, and you can begin modifying parameters. After making changes, click the save button in the lower-right corner to save.
+
+2. Node Topology Relationship Configuration File:
+   This file is associated with the node parameter configuration file "topology_config.xml" and describes the corresponding relationships between each node and the nodes they communicate with. The "bid" in this file must correspond to the "bid" in the "device_config.xml". Additionally, parameters for the node's queue are configured here.
+   2.1 Parameter Introduction:
+      - exchange: Defines the routing of the current node. A corresponding routing with the same name must be configured in the RabbitMQ service.
+      - rout: Routing key, the node's routing key. When receiving messages, messages are identified by this keyword.
+      - storage: Sets whether communication messages need to be saved to the database.
+      - pos: Position for saving the nodes in the topology diagram editing tool. The tool automatically saves this, and no manual changes are needed.
+
+   2.2 Parameter Configuration Tool "ConfigEdit.exe":
+   This is a dedicated tool for editing node topology relationship files to quickly modify various parameters.
+   Open the "topology config" page of the tool interface:
+   - Click the circular button in the middle to load the configuration file and see the nodes below.
+   - Click the arrow button to move and adjust the positions of the nodes.
+   - Click the line button to connect nodes and build connection relationships. To disconnect two nodes, select the connecting line and press the delete button.
+   - Click the save button to save the currently modified parameters.
+   - Select a node icon to modify the exchange, rout, and storage parameters above it.

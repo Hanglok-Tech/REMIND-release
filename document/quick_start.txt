@@ -1,0 +1,61 @@
+Creating a project example:
+   Environmental requirements: The operating system is Windows 11, Qt version is 5.14.2, and the IDE for compilation environment is MSVC2017.
+   Step 1: Open Qt and create a QWidget project, follow the prompts to complete.
+   Step 2: Copy the relevant files under "deploy_64\windows_64(linux_64)" to the project compilation directory.
+   Step 3: Copy the header files under "include" to the project code directory.
+   Step 4: Add the following declarations for including file paths:
+
+   INCLUDEPATH += include/CommunicationUtils
+   INCLUDEPATH += include/define
+   INCLUDEPATH += include/interface
+
+   Then load libraries:
+
+   LIBS += -l$${PWD}/deploy_64/windows_64(linux_64)/RemindCommunicationStack
+   LIBS += -l$${PWD}/deploy_64/windows_64(linux_64)/RemindConfig
+
+   Step 5: Call the interface
+   Build the client interface in the created MainWindow class and call the interface. Below is a simple description of the interface calls; for detailed code, please refer to the attached example.
+	1)Call the "loadConfig" interface during initialization to load the configuration file.
+		m_Remind = new RemindCommunicationStack();
+		QString path_device = QCoreApplication::applicationDirPath() + "/config/device_config.xml";
+		QString path_top = QCoreApplication::applicationDirPath() + "/config/topology_config.xml";
+		if (QFile::exists(path_device) && QFile::exists(path_top)) {
+			m_Remind->LoadConfig(path_device, path_top);
+		}
+	2)set patient id and session id, running comunication
+		m_Remind->SetPatientSession(patient_id, session_id);
+		if (!m_Remind->Launch(origin_id)) {
+			slotShowMessage("start fail!");
+			return;
+		}
+	3)get output target queue, send message
+		auto queue = m_Remind->GetOutputQueue(bid);
+		.............................
+		auto msg = new lienaCustomizedMessage(message_id, target_id, origin_id, timeshpe);
+        msg->append(bd);
+        queue->push(msg);
+        QString text = QString("origin id:%1 --->%2, message_id:%3, lenght:%4").arg(origin_id).arg(target_id).arg(msg->getMessageId()).arg(msg->body().length());
+	4)get recever queue, recev message
+		auto queue = m_Remind->GetInputQueue(bid);
+		........................................
+		if (queue->getLen() == 0) {
+            continue;
+        }
+        auto msg = queue->popFront();
+        int64_t current_timeshpe = QDateTime::currentMSecsSinceEpoch();
+        int64_t cost_time = current_timeshpe - msg->getTimestamp();
+        slotShowMessage(QString("data origin id:%1 recv<--- data lenght:%2  message id:%3 cost time for producer:%4 ms").arg(msg->getOriginId()).arg(msg->body().length()).arg(msg->getTargetId()).arg(cost_time));
+        delete msg;
+	5)get node status, update node icon status
+		if (m_Remind->GetDeviceStatus(top->bid, s)) {
+		qDebug() << "status:" << s;
+		if (s == "a") {
+			setNodeOnline(top->bid);
+		} else {
+			setNodeOffline(top->bid);
+		}
+		} else {
+			setNodeOffline(top->bid);
+		}
+	Step 6:Compile and test

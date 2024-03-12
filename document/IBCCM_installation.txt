@@ -1,0 +1,7 @@
+1. Install Docker on the server, supporting both Windows and Linux systems. For testing purposes, the Linux system installed is Ubuntu 22.04, and the Windows system is Windows 11.
+2. Within the Docker system that has been installed, install the service environment images:
+   Extract the downloaded image installation script `remind-win-linux.tar` to a directory, install the relevant services, and execute the following scripts in the extracted directory:
+   For Linux: `init-service-linux.sh`
+   For Windows: `init-service-win.bat`
+   This way, the scripts will automatically install the services.
+   Note: Ensure that the system is connected to the internet while executing the scripts.
