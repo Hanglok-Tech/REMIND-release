@@ -4,7 +4,7 @@
 | [**Getting started**](#getting-started)  
 | [**API Reference**](#API-Reference)  
 
-![generalized distributed system](http://hanglok.tech/Template/Home/img/introduction-banner-02.jpg)
+![generalized distributed system](https://www.hanglok-tech.cn/Template/Home/img/introduction-banner-02.jpg)
 
 **REMINDware** is a middleware designed for the development of intervention surgical robots. To facilitate communication with interested peers about the development of intervention surgical robot technology, we encapsulate the REMINDware design concept into middleware. As the development iterations of this project are still progressing in an orderly manner, only the early C++ version library files are currently publicly available, supporting the rapid construction of a distributed node communication architecture under the Qt C++ environment. This repository provides dynamic/static library files for Linux/Windows, a central node container image, simple dual-node communication examples, and relevant installation and usage instructions.
 
@@ -15,7 +15,7 @@
 ## About REMIND
 
 **REMIND** has proposed a design paradigm for intervention surgical robots, as shown in the following figure：
-![design paradigm](http://hanglok.tech/Template/Home/img/liena-pic-n-12.png)
+![design paradigm](https://www.hanglok-tech.cn/Template/Home/img/liena-pic-n-12.png)
 Within this paradigm, intervention surgical robots conform to the design principles of distributed robotics and can be abstracted into the following main nodes：
 
 - Interventionalist’s brain-like cloud computing module (**IBCCM**)
@@ -29,7 +29,7 @@ This module gathers perception information about all intraoperative actions and 
 - Interventional tool execution module (**ITEM**)
 This module collaborates with physicians to execute actions according to IBCCM’s control commands.
 
-Please, refer to the REMIND information page for a more detail：[REMIND-OS](http://hanglok.tech/list/55.html).
+Please, refer to the REMIND information page for a more detail：[REMIND-OS](https://www.hanglok-tech.cn/list/55.html).
 
 ## IBCCM Installation
 [install IBCCM docker image](document/IBCCM_installation.txt)<br>
