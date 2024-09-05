@@ -12,6 +12,7 @@ using namespace std;
 #endif
 
 #define Trans(__VA_ARGS__)  HanglokTranslate::Inst()->Translate(__VA_ARGS__)
+#define Trans_Init(__VA_ARGS__)  HanglokTranslate::Inst()->Init(__VA_ARGS__)
 
 struct InfoTranslate;
 class TRANSLATEEXPORTDLL HanglokTranslate : public QObject {
@@ -21,7 +22,7 @@ public:
         static HanglokTranslate t;
         return &t;
     }
-    bool Init();
+    bool Init(const QString &path);
     void SetLanguage(const QString &lang);
     QString Translate(const QString &content);
     QString GetCurrentLanguage();

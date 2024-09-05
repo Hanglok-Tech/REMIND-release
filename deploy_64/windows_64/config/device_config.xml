@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <rabbitmq type="Topic" ip="192.168.0.100" port="5672" password="admin" user="admin" vhost="Hanglok"/>
+  <service data_content="api/v1/data" node_content="api/v1/msg/ack" ip="192.168.0.100" port="8888" file_content="api/v1/file"/>
+  <select bid="123457"/>
+  <devices>
+    <device name="eye-ft" bid="123456" ip="172.10.0.201" port="60000"/>
+    <device name="eye-view" bid="123457" ip="172.10.0.202" port="60000"/>
+  </devices>
+  <heartbeat ip="192.168.0.100" port="20000" interval="1000" rout="register"/>
+</root>

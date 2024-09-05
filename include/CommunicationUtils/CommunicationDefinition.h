@@ -11,6 +11,13 @@
 //!                                        remind distributed device ID
 //!--------------------------------------------------------------------------------------------------------------------------
 
+//define nodes
+#define SGNIO_IPGM_ID 1001
+#define SGNIO_SIEM_ID 1002
+#define SGNIO_ICNM_ID 1003
+#define SGNIO_UIAM_ID 1004
+#define SGNIO_OTTM_ID 1005
+
 // hand
 #define NORMAN_ENDOVASCULAR_ROBOTIC_VERSION_1               0
 #define HANGLOK_SGNIO_ROBOTIC_ARM_VERSION_1                 1

@@ -1,5 +1,5 @@
-#ifndef REMIND_GLOBAL_H
-#define REMIND_GLOBAL_H
+#pragma once
+#include <QObject>
 
 #if defined(NO_EXPORT_IMPORT)
     #define REMINDEXPORTDLL
@@ -11,5 +11,3 @@
     #endif
 #endif
 
-
-#endif // REMIND_GLOBAL_H

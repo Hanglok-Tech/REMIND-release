@@ -88,6 +88,10 @@ void RemindMessage::setTargetId(uint32_t target_id){
     this->targetId = target_id;
 }
 
+void RemindMessage::setTimestamp(uint64_t  timestamp) {
+    this->timestamp = timestamp;
+}
+
 void RemindMessage::setDLC(uint32_t dlc)
 {
     DLC = dlc;
@@ -184,4 +188,20 @@ uint64_t RemindMessage::getTimestamp() const {
 //!
 uint32_t RemindMessage::getDLC() const {
     return this->DLC;
+}
+
+void RemindMessage::setPatientId(const std::string &patient_id) {
+    m_patient_id = patient_id;
+}
+
+void RemindMessage::setSessionId(const std::string &session_id) {
+    m_session_id = session_id;
+}
+
+std::string RemindMessage::getPatientId() {
+    return m_patient_id;
+}
+
+std::string RemindMessage::getSessionId() {
+    return m_session_id;
 }

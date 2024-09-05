@@ -1,68 +1,74 @@
 #pragma once
-#include <QObject>
-#include <QMap>
-#include <QPoint>
+#include <list>
+#include <vector>
+#include <map>
 #include <string>
 #include <memory>
-#include <QMetaType>
-using namespace std;
+// using namespace std;
 
 struct InfoRabbitMq {
     int port;
-    QString ip;
-    QString user;
-    QString password;
-    QString vhost;
-    QString type;
+    std::string ip;
+    std::string user;
+    std::string password;
+    std::string vhost;
+    std::string type;
 };
 
 struct InfoDevice {
     uint64_t bid;
-    QString name;
-    QString ip;
+    std::string name;
+    std::string ip;
     int port;
 };
 
 struct InfoHeartBeat {
     int interval;
-    QString ip;
+    std::string ip;
     int port;
-    QString rout;
+    std::string rout;
+};
+
+struct InfoDefineQueue {
+    std::string queue_name;
+    std::string exchange;
+    std::string rout_key;
+    bool no_msg_header = false;
 };
 
 struct InfoDeviceTopology {
     uint64_t bid;
-    QString name;
-    QList<uint64_t> connects; //bid
-    QPoint pos = QPoint(0, 0);
+    std::string name;
+    std::list<uint64_t> connects; //bid
+    std::vector<float> pos = {0, 0};
     bool storage_message = true;
     //QString exchange;
     //QString rout; //routing key
 };
 
 struct InfoService {
-    QString ip;
+    std::string ip;
     int port;
-    QString node_content;
-    QString data_content;
-    QString file_content;
+    std::string node_content;
+    std::string data_content;
+    std::string file_content;
 };
 
 struct InfoDeviceNodes {
-    shared_ptr<InfoRabbitMq> rabbitmq = nullptr;
-    shared_ptr<InfoService> service = nullptr;
-    QMap<uint64_t, shared_ptr<InfoDevice>> id2infoDevices;
-    shared_ptr<InfoHeartBeat> heartbeat = nullptr;
-    QString patient_id;
-    QString session_id;
+    std::shared_ptr<InfoRabbitMq> rabbitmq = nullptr;
+    std::shared_ptr<InfoService> service = nullptr;
+    std::map<uint64_t, std::shared_ptr<InfoDevice>> id2infoDevices;
+    std::shared_ptr<InfoHeartBeat> heartbeat = nullptr;
+    std::string patient_id;
+    std::string session_id;
     uint64_t cur_bid;
-    shared_ptr<InfoDeviceTopology> cur_top = nullptr;
-    QList<shared_ptr<InfoDeviceTopology>> connect_tops;
+    std::shared_ptr<InfoDeviceTopology> cur_top = nullptr;
+    std::list<std::shared_ptr<InfoDeviceTopology>> connect_tops;
 };
 
 struct InfoOperation {
-    QString patient_name;
-    QString patient_id;
-    QString session_id;
+    std::string patient_name;
+    std::string patient_id;
+    std::string session_id;
 };
 

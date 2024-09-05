@@ -3,7 +3,7 @@
 #include <math.h>
 #include "RemindGlobal.h"
 
-class REMIND_EXPORT RemindMessage {
+class REMINDEXPORTDLL RemindMessage {
 public:
 
     void init();
@@ -31,12 +31,19 @@ public:
     uint8_t getDeviceVision() const;
     uint8_t getDeviceIndex() const;
 
+    void setPatientId(const std::string &patient_id);
+    void setSessionId(const std::string &session_id);
+    std::string getPatientId();
+    std::string getSessionId();
+
 private:
     uint64_t messageId;         //! 64 bits
     uint32_t targetId;          //! 32 bits
     uint32_t originId;          //! 32 bits
     uint64_t timestamp;         //! 64 bits
     uint32_t DLC;               //! 32 bits
+    std::string m_patient_id = "0";
+    std::string m_session_id = "0";
 
 public:
     RemindMessage(uint64_t messageId, uint32_t targetId, uint32_t originId, uint64_t timestamp, uint32_t DLC);

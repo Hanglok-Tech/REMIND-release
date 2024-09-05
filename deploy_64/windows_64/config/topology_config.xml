@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <device bid="123456">
+    <queue storage="0"/>
+    <pos x="0.183544" y="0.269598"/>
+    <connections>
+      <connect bid="123457"/>
+    </connections>
+  </device>
+  <device bid="123457">
+    <queue storage="0"/>
+    <pos x="0.57173" y="0.235182"/>
+    <connections>
+      <connect bid="123456"/>
+    </connections>
+  </device>
+</root>

@@ -1,54 +1,77 @@
 #pragma once
-#include <QObject>
-#include <QMap>
-#include <memory>
-#include "RemindGlobal.h"
 #include "RemindMessageQueue.h"
-using namespace std;
+
+#if defined(REMINDCOMDLL_LIBRARY)
+    #define REMINDCOMEXPORTDLL Q_DECL_EXPORT
+#else
+    #define REMINDCOMEXPORTDLL Q_DECL_IMPORT
+#endif
 
 class HanglokDevice;
 struct InfoDeviceNodes;
 struct InfoDeviceTopology;
 
-class REMINDEXPORTDLL RemindCommunicationStack : public QObject {
-    Q_OBJECT
+class REMINDCOMEXPORTDLL RemindCommunicationStack {
 public:
     RemindCommunicationStack();
+
     ~RemindCommunicationStack() {}
     //common
-    bool LoadConfig(const QString &device_path, const QString &topology_path);
-    void SetPatientSession(const QString &patient_id, const QString &session_id);
-    //node communication
-    bool Launch(uint64_t bid = 0);
+    bool LoadConfig(const std::string &device_path, const std::string &topology_path);
+
+    void SetPatientSession(const std::string &patient_id, const std::string &session_id);
+
+    bool Init(uint64_t bid = 0);
+
+    bool Launch();
+
     bool Terminate();
+
     RemindMessageQueue *GetOutputQueue(uint64_t bid = 0);//send data queue
+
     RemindMessageQueue *GetInputQueue(uint64_t bid = 0);//recv data queue
-    bool GetDeviceStatus(QMap<uint64_t, QString> &status);
-    bool GetDeviceStatus(uint64_t bid, QString &status);
-    void RegisterMsgFunc(const std::function<void(int, string)> &msg_callback);
+
+    RemindMessageQueue *DefineInputQueue(const std::string &queue_name,
+                                         const std::string &exchange,
+                                         const std::string &rout_key,
+                                         bool no_msg_header = false);
+
+    RemindMessageQueue *DefineOutputQueue(const std::string &queue_name,
+                                          const std::string &exchange,
+                                          const std::string &rout_key,
+                                          bool no_msg_header = false);
+
+    bool GetDeviceStatus(std::map<uint64_t, std::string> &status);
+
+    bool GetDeviceStatus(uint64_t bid, std::string &status);
+
+    void SetCurrentDeviceStatus(const std::string &status);
+
+    void RegisterMessageFunc(const std::function<void(std::string &)> msg_callback);
 
     //create base info
-    QString GetCurrentNodeName();
+    std::string GetCurrentNodeName();
+
     uint64_t GetCurrentNodeId();
     //name to id
-    QMap<QString, uint64_t> GetNodeConnectList();
-    shared_ptr<InfoDeviceNodes> GetNodeConfig();
+    std::map<std::string, uint64_t> GetNodeConnectList();
+
+    std::shared_ptr<InfoDeviceNodes> GetNodeConfig();
 private:
     bool initConfig();
 
-signals:
-    void sigMessage(const QString &msg);
+    void callbackMessage(std::string msg);
 
-private slots:
-    void slotRecvMessage(const QString &msg);
 private:
+    bool m_is_init = false;
     bool m_isLoadConfig = false;
     bool m_isRunning = false;
-    QString m_patientId;
-    QString m_sessionId;
-    std::function<void(int, string)> m_msg_callback = nullptr;
-    shared_ptr<InfoDeviceNodes> m_info = nullptr;
-    shared_ptr<HanglokDevice> m_device = nullptr;
-    QMap<uint64_t, shared_ptr<InfoDeviceTopology>> m_id2topology;
+    std::string m_patientId = "12345678";
+    std::string m_sessionId = "1";
+    std::function<void(std::string &)> m_messageCallback = nullptr;
+    std::shared_ptr<InfoDeviceNodes> m_info = nullptr;
+    std::shared_ptr<HanglokDevice> m_device = nullptr;
+    std::map<uint64_t, std::shared_ptr<InfoDeviceTopology>> m_id2topology;
+    std::mutex m_mutex;
 };
 
